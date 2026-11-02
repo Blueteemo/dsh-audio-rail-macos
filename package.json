@@ -1,0 +1,65 @@
+{
+  "name": "dsh-audio-rail-macos",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "让 DSH 会话页右侧的锚点跟着 Mac 上播放的音乐律动：12 段真实频谱，只改长度、不覆盖锚点原有状态。macOS 14.2+，首次运行需授予「音频录制」权限。",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./client": "./lib/client.js",
+    "./cordis.patch.yml": "./cordis.patch.yml",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib",
+    "native/bin/dsh-audio-rail-tap",
+    "cordis.patch.yml",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+    "icon.svg",
+    "assets"
+  ],
+  "keywords": [
+    "dsh-plugin",
+    "deepseek-harness",
+    "cordis",
+    "macos",
+    "audio",
+    "spectrum",
+    "core-audio"
+  ],
+  "os": [
+    "darwin"
+  ],
+  "engines": {
+    "dsh": ">=0.2.0-rc.1"
+  },
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    },
+    "client": {
+      "platform": "web",
+      "inject": [
+        "@deepseek-ai/dsh-client-ui-chat"
+      ]
+    }
+  },
+  "scripts": {
+    "build:native": "cd native && swiftc -O -parse-as-library -target arm64-apple-macos14.2 -o build/arm64 Sources/*.swift -framework CoreAudio -framework AudioToolbox -framework Accelerate && swiftc -O -parse-as-library -target x86_64-apple-macos14.2 -o build/x86_64 Sources/*.swift -framework CoreAudio -framework AudioToolbox -framework Accelerate && lipo -create -output bin/dsh-audio-rail-tap build/arm64 build/x86_64",
+    "preflight": "node scripts/preflight.mjs",
+    "prepublishOnly": "node scripts/preflight.mjs"
+  },
+  "author": "Blueteemo <dinghongji0504@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Blueteemo/dsh-audio-rail-macos.git"
+  },
+  "homepage": "https://github.com/Blueteemo/dsh-audio-rail-macos#readme",
+  "bugs": {
+    "url": "https://github.com/Blueteemo/dsh-audio-rail-macos/issues"
+  },
+  "icon": "./icon.svg"
+}

@@ -1,0 +1,7 @@
+# dsh-audio-rail-macos — bundle patch.
+#
+# Inserts the single plugin row (host routes + browser half are one plugin).
+# The id stays stable so a profile patch can target it, e.g. to disable it.
+- insert:
+    - id: audio-rail-macos
+      name: 'dsh-audio-rail-macos'
