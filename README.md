@@ -1,10 +1,20 @@
 # dsh-audio-rail-macos
 
+[![npm](https://img.shields.io/npm/v/dsh-audio-rail-macos.svg)](https://www.npmjs.com/package/dsh-audio-rail-macos) [![license](https://img.shields.io/npm/l/dsh-audio-rail-macos.svg)](LICENSE)
+
+> **不要在 macOS 上装 Windows 版的 [dsh-audio-rail](https://github.com/Lingwuxin/dsh-audio-rail)。** 它没声明 `os`，在 macOS 上也能装上，但采集器是 Windows 的 `.exe`，跑不起来；而且它注册的 `/audio-rail/events`、`/audio-rail/status` 与本插件同名——宿主对重复路由直接抛错，两个插件会有一个加载失败。Windows 用户请用那个版本，本插件只支持 macOS。
+>
+> **macOS 14.2+ 专用。** 首次运行需在「系统设置 → 隐私与安全性 → 音频录制」里授权（授权对象是 DeepSeek Harness 本身）；没授权时页面不会动，也不会报错。
+
 DeepSeek Harness 会话页右侧那列跳转锚点（turn rail），跟着 Mac 正在播放的音乐跳。
 
 只动几何：每根锚点是一条 2px 高的小白条，长度随它对应那段频谱起伏。不加颜色、不加发光、不覆盖宿主自己的状态长度——正在看的锚点仍然最长，没加载的仍然最短，音乐只是在这个长度上叠加脉冲。
 
 ## 长什么样
+
+![锚点跟着音乐跳动](docs/rail.gif)
+
+<sub>真机录制，只裁取右侧锚点区域（不含任何对话内容）；为看清跳动，画面提亮了 1.5 倍、放慢到 0.8 倍速。</sub>
 
 12 段对数频谱（45 Hz – 16 kHz），低频在底部、高频在顶部，整列像一根竖起来的频谱仪。33 ms 一帧，attack/release 平滑，松手会自己落回去。
 
